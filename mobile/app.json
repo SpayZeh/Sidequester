@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "SideQuest",
+    "slug": "sidequester",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#09090b",
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#09090b"
+      },
+      "package": "com.sidequester.app"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "SideQuest needs photo access to upload your quest completion.",
+          "cameraPermission": "SideQuest needs camera access to capture your quest completion."
+        }
+      ]
+    ]
+  }
+}
