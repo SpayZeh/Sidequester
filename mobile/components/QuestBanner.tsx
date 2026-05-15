@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { View, Text, Pressable, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { getSecondsUntilMidnightUTC, formatCountdown } from '../lib/quests'
 import type { Quest } from '../lib/quests'
 
 interface Props {
@@ -11,173 +10,107 @@ interface Props {
 }
 
 export default function QuestBanner({ quest, onComplete, hasCompleted }: Props) {
-  const [secondsLeft, setSecondsLeft] = useState(getSecondsUntilMidnightUTC())
-
-  useEffect(() => {
-    const id = setInterval(() => setSecondsLeft(getSecondsUntilMidnightUTC()), 1000)
-    return () => clearInterval(id)
-  }, [])
-
-  const timerColor =
-    secondsLeft < 3600 ? '#f87171' : secondsLeft < 10800 ? '#fbbf24' : '#c4b5fd'
-
   return (
     <LinearGradient
-      colors={['#2e1065', '#4c1d95', '#831843']}
+      colors={['#7c3aed', '#ec4899', '#f97316']}
       start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.card}
+      end={{ x: 1, y: 0 }}
+      style={styles.border}
     >
-      {/* Header row */}
-      <View style={styles.headerRow}>
-        <Text style={styles.questNum}>Quest #{quest.questNumber}</Text>
-        <View style={styles.categoryBadge}>
-          <Text style={styles.categoryText}>{quest.category}</Text>
+      <View style={styles.card}>
+        <Text style={styles.emoji}>{quest.emoji}</Text>
+        <View style={styles.info}>
+          <Text style={styles.category}>{quest.category}</Text>
+          <Text style={styles.title} numberOfLines={1}>{quest.title}</Text>
+          <Text style={styles.description} numberOfLines={1}>{quest.description}</Text>
         </View>
+        {hasCompleted ? (
+          <View style={styles.doneBadge}>
+            <Text style={styles.doneText}>✓ Done!</Text>
+          </View>
+        ) : (
+          <Pressable
+            onPress={onComplete}
+            style={({ pressed }) => [styles.cta, pressed && styles.ctaPressed]}
+          >
+            <Text style={styles.ctaText}>Do it →</Text>
+          </Pressable>
+        )}
       </View>
-
-      {/* Emoji + title */}
-      <Text style={styles.emoji}>{quest.emoji}</Text>
-      <Text style={styles.title}>{quest.title}</Text>
-      <Text style={styles.description}>{quest.description}</Text>
-
-      {/* Hint */}
-      <View style={styles.hintBox}>
-        <Text style={styles.hintText}>💡 {quest.hint}</Text>
-      </View>
-
-      {/* Countdown */}
-      <View style={styles.countdownRow}>
-        <Text style={styles.clockIcon}>⏰</Text>
-        <Text style={[styles.countdown, { color: timerColor }]}>
-          {formatCountdown(secondsLeft)}
-        </Text>
-        <Text style={styles.remainingLabel}> remaining</Text>
-      </View>
-
-      {/* CTA */}
-      {hasCompleted ? (
-        <View style={styles.completedBox}>
-          <Text style={styles.completedText}>✓ Quest Completed! Great work today 🎉</Text>
-        </View>
-      ) : (
-        <Pressable
-          onPress={onComplete}
-          style={({ pressed }) => [styles.ctaBtn, pressed && styles.ctaBtnPressed]}
-        >
-          <Text style={styles.ctaBtnText}>Complete Quest →</Text>
-        </Pressable>
-      )}
     </LinearGradient>
   )
 }
 
 const styles = StyleSheet.create({
+  border: {
+    marginHorizontal: 16,
+    marginTop: 12,
+    marginBottom: 8,
+    borderRadius: 18,
+    padding: 1.5,
+  },
   card: {
-    margin: 16,
-    borderRadius: 20,
-    padding: 20,
-  },
-  headerRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
-  },
-  questNum: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: '#a78bfa',
-    letterSpacing: 1.5,
-    textTransform: 'uppercase',
-  },
-  categoryBadge: {
-    backgroundColor: 'rgba(236,72,153,0.2)',
-    borderWidth: 1,
-    borderColor: 'rgba(236,72,153,0.35)',
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 20,
-  },
-  categoryText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: '#f9a8d4',
+    gap: 12,
+    backgroundColor: '#18181b',
+    borderRadius: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
   },
   emoji: {
-    fontSize: 56,
-    marginBottom: 10,
+    fontSize: 28,
+    lineHeight: 34,
+  },
+  info: {
+    flex: 1,
+    minWidth: 0,
+  },
+  category: {
+    fontSize: 9,
+    fontWeight: '700',
+    color: '#a78bfa',
+    textTransform: 'uppercase',
+    letterSpacing: 1.2,
+    marginBottom: 1,
   },
   title: {
-    fontSize: 26,
+    fontSize: 14,
     fontWeight: '900',
     color: '#ffffff',
-    marginBottom: 4,
+    lineHeight: 18,
   },
   description: {
-    fontSize: 14,
-    color: '#ddd6fe',
-    lineHeight: 20,
-    marginBottom: 16,
+    fontSize: 11,
+    color: '#71717a',
+    marginTop: 1,
   },
-  hintBox: {
-    backgroundColor: 'rgba(255,255,255,0.08)',
-    borderRadius: 12,
-    padding: 12,
-    marginBottom: 16,
-  },
-  hintText: {
-    fontSize: 12,
-    color: '#c4b5fd',
-    lineHeight: 17,
-  },
-  countdownRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 18,
-  },
-  clockIcon: {
-    fontSize: 18,
-    marginRight: 6,
-  },
-  countdown: {
-    fontFamily: 'monospace',
-    fontSize: 26,
-    fontWeight: '900',
-    letterSpacing: -1,
-  },
-  remainingLabel: {
-    fontSize: 12,
-    color: '#a78bfa',
-    marginLeft: 6,
-  },
-  ctaBtn: {
+  cta: {
     backgroundColor: '#ffffff',
-    borderRadius: 14,
-    paddingVertical: 14,
-    alignItems: 'center',
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
   },
-  ctaBtnPressed: {
-    opacity: 0.85,
-    transform: [{ scale: 0.97 }],
+  ctaPressed: {
+    opacity: 0.8,
+    transform: [{ scale: 0.95 }],
   },
-  ctaBtnText: {
-    color: '#4c1d95',
-    fontSize: 14,
+  ctaText: {
+    fontSize: 12,
     fontWeight: '900',
-    letterSpacing: 0.5,
+    color: '#18181b',
   },
-  completedBox: {
+  doneBadge: {
     backgroundColor: 'rgba(16,185,129,0.15)',
     borderWidth: 1,
     borderColor: 'rgba(16,185,129,0.3)',
-    borderRadius: 14,
-    paddingVertical: 14,
-    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 20,
   },
-  completedText: {
-    color: '#6ee7b7',
-    fontSize: 14,
+  doneText: {
+    fontSize: 11,
     fontWeight: '700',
+    color: '#6ee7b7',
   },
 })

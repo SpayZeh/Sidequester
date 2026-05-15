@@ -44,11 +44,8 @@ export default function App() {
 
       {/* Header bar */}
       <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <Text style={styles.headerLogo}>🎯</Text>
-          <Text style={styles.headerTitle}>SideQuest</Text>
-        </View>
-        <Text style={styles.headerCount}>{posts.length} completions</Text>
+        <Text style={styles.headerTitle}>questie</Text>
+        <Text style={styles.headerCount}>{posts.length} posts</Text>
       </View>
 
       {/* Feed */}
@@ -76,7 +73,7 @@ export default function App() {
               end={{ x: 1, y: 0 }}
               style={styles.fab}
             >
-              <Text style={styles.fabText}>✓  Complete Today's Quest</Text>
+              <Text style={styles.fabText}>+ post your quest</Text>
             </LinearGradient>
           </Pressable>
         </View>
@@ -107,16 +104,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#18181b',
   },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  headerLogo: {
-    fontSize: 22,
-  },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '900',
     color: '#a78bfa',
     letterSpacing: -0.5,

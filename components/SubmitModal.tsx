@@ -53,7 +53,7 @@ export default function SubmitModal({ quest, onSubmit, onClose }: SubmitModalPro
         <div className="px-5 pt-4 pb-4 border-b border-zinc-800">
           <div className="flex items-start justify-between">
             <div>
-              <h3 className="font-black text-lg text-white leading-tight">Complete Quest</h3>
+              <h3 className="font-black text-lg text-white leading-tight">Post your quest</h3>
               <p className="text-sm text-zinc-400 mt-0.5">
                 {quest.emoji} {quest.description}
               </p>
@@ -141,7 +141,7 @@ export default function SubmitModal({ quest, onSubmit, onClose }: SubmitModalPro
                 Posting…
               </>
             ) : (
-              <>Post to Feed 🎯</>
+              <>Share it ✦</>
             )}
           </button>
         </div>

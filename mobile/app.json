@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "SideQuest",
-    "slug": "sidequester",
+    "name": "Questie",
+    "slug": "questie",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
@@ -10,7 +10,7 @@
       "adaptiveIcon": {
         "backgroundColor": "#09090b"
       },
-      "package": "com.sidequester.app"
+      "package": "com.questie.app"
     },
     "plugins": [
       [

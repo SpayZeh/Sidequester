@@ -5,8 +5,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'SideQuest — Daily Quests for Everyone',
-  description: 'Complete daily quests and share your adventures with the world. Everyone gets the same quest every 24 hours.',
+  title: 'Questie — Daily Quests for Everyone',
+  description: 'Complete daily quests and share your moments with the world.',
 }
 
 export const viewport: Viewport = {
